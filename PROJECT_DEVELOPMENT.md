@@ -25,3 +25,11 @@
 * The game should have a couple accessibility options, like changing key functions and changing the display
 
 ### __Design__
+
+#### __Storyboard__
+![Alt text](Storyboard.png)
+
+#### __Data Flow Diagrams__
+
+##### __Level 0 Data Flow Diagram__
+![Alt text](Level%200%20Data%20Flow%20Diagram.png)
