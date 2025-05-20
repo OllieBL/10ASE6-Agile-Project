@@ -27,12 +27,15 @@
 ### __Design__
 
 #### __Storyboard__
-![Alt text](Storyboard.png)
+![Alt text](Images%20and%20other%20files/Storyboard.png)
 
 #### __Data Flow Diagrams__
 
 ##### __Level 0 Data Flow Diagram__
-![Alt text](Level%200%20Data%20Flow%20Diagram.png)
+![Alt text](Images%20and%20other%20files/Level%200%20Data%20Flow%20Diagram.png)
 
 ##### __Level 1 Data Flow Diagram__
-![Alt text](Level%201%20Data%20Flow%20Diagram.png)
+![Alt text](Images%20and%20other%20files/Level%201%20Data%20Flow%20Diagram.png)
+
+#### __GANTT Chart__
+![Alt text](Images%20and%20other%20files/Online%20Gantt%2020250520.png)
