@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 from sys import exit
 import combat_objects
 
@@ -22,10 +23,14 @@ class CombatBoard:
 
     def display_board(self):
         while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit()
+
+
             for i in range(len(self._board_tiles)):
-                for j in range(len(self._board_tiles[i]), 2):
-                    pygame.draw.rect(screen, (255, 255, 255), pygame.Rect((i*10+10), (j*10+10), 10, 10))
-                    pygame.draw.rect(screen, (200, 200, 200), pygame.Rect((i*10+10), (j*10+10), 10, 10))
+                for j in range(len(self._board_tiles[i])):
+                    pygame.draw.rect(screen, (255, 255, 255), pygame.Rect((i*35+10), (j*35+10), 30, 30))
             pygame.display.flip()
                     
 
@@ -48,4 +53,4 @@ pygame.init()
 
 screen = pygame.display.set_mode((500, 500))
 
-board = CombatBoard([], [5, 5], screen)
+board = CombatBoard([], [20, 20], screen)
