@@ -39,3 +39,7 @@
 
 #### __GANTT Chart__
 ![Alt text](Images%20and%20other%20files/Online%20Gantt%2020250520.png)
+
+### __Review__
+1. My code fulfills some of the requirements, however there are many that will be fulfilled later. For instance, only the board is currently in existance, because I would like to program effectively from the beginning, I am unable to create a rudimentary UI without programming a large amount of the functionality in the code. The map, all combat features, as well as all art is not present in the build currently, as it is difficult to create a UI how I would like, due to the large amount of screens that I would like to put in the game
+1. 
