@@ -19,6 +19,11 @@ class CombatBoard:
         for i in range(self._board_dimensions[0]):
             self._board_tiles.append([])
             for j in range(self._board_dimensions[1]):
+                for x in self._combat_objects:
+                    if x.get_board_position() == [i, j]:
+                        self._board_tiles[i].append(Tile(x))
+                        break
+
                 self._board_tiles[i].append(Tile(False))
 
     def display_board(self):
@@ -31,6 +36,11 @@ class CombatBoard:
             for i in range(len(self._board_tiles)):
                 for j in range(len(self._board_tiles[i])):
                     pygame.draw.rect(screen, (255, 255, 255), pygame.Rect((i*35+10), (j*35+10), 30, 30))
+                    if self._board_tiles[i][j].get_combat_object() != False:
+                        tile_image = pygame.image.load(self._board_tiles[i][j].get_combat_object().get_image()).convert()
+                        pygame.transform.scale(tile_image, (30, 30))
+                        screen.blit(tile_image, (i*35+10, j*35+10))
+
             pygame.display.flip()
                     
 
@@ -53,4 +63,4 @@ pygame.init()
 
 screen = pygame.display.set_mode((500, 500))
 
-board = CombatBoard([], [20, 20], screen)
+board = CombatBoard([combat_objects.Player(0, 0, 0, 0, 0, [0, 0], 'Images and other files/New Piskel (1).png', 0)], [5, 5], screen)
