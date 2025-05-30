@@ -27,8 +27,6 @@ class CombatBoard:
                     
                 if validator == False:
                     self._board_tiles[i].append(Tile(False))
-        for i in self._board_tiles:
-            print(len(i))
 
     def display_board(self):
         image_list = []
@@ -46,8 +44,6 @@ class CombatBoard:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    for i in self._board_tiles:
-                        print(len(i))
                     exit()
 
 
