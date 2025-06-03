@@ -24,6 +24,15 @@
 * The game should be pixel-art based
 * The game should have a couple accessibility options, like changing key functions and changing the display
 
+### __Usecases__
+__Actor:__ Player
+__Preconditions:__ Software installed
+__Main Flow:__
+1. Player selects 'play' button to enter game on map
+1. Player selects which location on map to enter
+1. Player participates in combat
+__Postconditions:__ Player has participated in game
+
 ### __Design__
 
 #### __Storyboard__
@@ -42,4 +51,6 @@
 
 ### __Review__
 1. My code fulfills some of the requirements, however there are many that will be fulfilled later. For instance, only the board is currently in existance, because I would like to program effectively from the beginning, I am unable to create a rudimentary UI without programming a large amount of the functionality in the code. The map, all combat features, as well as all art is not present in the build currently, as it is difficult to create a UI how I would like, due to the large amount of screens that I would like to put in the game
-1. 
+1. The program does not allow most of the parts of the usecase provided, due to only one section of the code being completed
+1. The code has fairly functional structure which is also quite intuitive to understand, however there is very little comments on the code, only a few objects have explanations
+1. The next improvements are to create a menu screen, and implement a map for the player to use
