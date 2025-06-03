@@ -54,3 +54,6 @@ __Postconditions:__ Player has participated in game
 1. The program does not allow most of the parts of the usecase provided, due to only one section of the code being completed
 1. The code has fairly functional structure which is also quite intuitive to understand, however there is very little comments on the code, only a few objects have explanations
 1. The next improvements are to create a menu screen, and implement a map for the player to use
+
+## __Sprint 2__
+

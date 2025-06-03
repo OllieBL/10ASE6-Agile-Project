@@ -129,9 +129,14 @@ class Enemy(CombatObject):
         distance_checker = []
 
         
-        distance_checker.append(abs((self._board_position[0] - 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position))
-        distance_checker.append(abs((self._board_position[0] + 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position))
-        distance_checker.append(abs(self._board_position[0] - player_board_position[0]) ** 2 + abs((self._board_position[1] - 1) - player_board_position))
-        distance_checker.append(abs(self._board_position[0] - player_board_position[0]) ** 2 + abs((self._board_position[1] + 1)- player_board_position))
+        distance_checker.append(abs((self._board_position[0] - 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position[1]) ** 2)
+        enemy_movement.append([self._board_position[0] - 1, self._board_position[1]])
+        distance_checker.append(abs((self._board_position[0] + 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position[1]) ** 2)
+        enemy_movement.append([self._board_position[0] + 1, self._board_position[1]])
+        distance_checker.append(abs(self._board_position[0] - player_board_position[0]) ** 2 + abs((self._board_position[1] - 1) - player_board_position[1]) ** 2)
+        enemy_movement.append([self._board_position[0], self._board_position[1] - 1])
+        distance_checker.append(abs(self._board_position[0] - player_board_position[0]) ** 2 + abs((self._board_position[1] + 1)- player_board_position[1]) ** 2)
+        enemy_movement.append([self._board_position[0], self._board_position[1] + 1])
 
-        return min(distance_checker)
+        self._board_position = enemy_movement[distance_checker.index(min(distance_checker))]
+        return self._board_position
