@@ -22,15 +22,15 @@ class CombatBoard:
             self._board_tiles.append([])
 
             for j in range(self._board_dimensions[1]):
-                validator = False
+
+                self._board_tiles[i].append(Tile(False))
 
                 for x in self._combat_objects:
                     if x.get_board_position() == [i, j]:
-                        self._board_tiles[i].append(Tile(x))
-                        validator = True
+                        self._board_tiles[i][j] = Tile(x)
                     
-                if validator == False:
-                    self._board_tiles[i].append(Tile(False))
+
+                
 
     def load_images(self):
         self._image_list = []
@@ -76,6 +76,8 @@ class CombatBoard:
             for i in self._combat_objects:
                 current_position.append([i.get_board_position()[0], i.get_board_position()[1]])
 
+            for i in range(len(self._combat_objects) - 1):
+                enemy_new_position.append('')
 
             if event.key == K_LEFT and current_position[0][0] > 0:
                 self._combat_objects[0].set_board_position([current_position[0][0] - 1, current_position[0][1]])
@@ -124,10 +126,3 @@ class Tile:
     
     def set_combat_object(self, combat_object):
         self._combat_object = combat_object
-
-
-pygame.init()
-
-screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
-
-board = CombatBoard([combat_objects.Player(0, 0, 0, 0, 0, [0, 0], 'Images and other files/test_image.png', 0), combat_objects.Enemy(0, 0, 0, 0, 0, [10, 10], 'Images and other files/enemy_art.png')], [20, 20], screen)
