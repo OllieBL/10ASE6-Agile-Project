@@ -12,6 +12,7 @@ class CombatBoard:
         self._board_tiles = []
         self._image_list = []
         self.screen = screen
+        self._tick = 0
 
         self.create_board()
         self.load_images()
@@ -51,6 +52,7 @@ class CombatBoard:
 
     def display_board(self):
         while True:
+            self._tick += 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
@@ -103,10 +105,11 @@ class CombatBoard:
                 new_position = current_position[0]
             
             for i in range(len(self._combat_objects) - 1):
+                if self._tick % 2 == 0:
                 
-                enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position())
-                self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
-                self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])
+                    enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position())
+                    self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
+                    self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])
 
 
             
