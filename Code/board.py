@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 from sys import exit
-import combat_objects
 
 
 # the board class for combat to take place on. it just creates the board and stores the locations and id's of objects on the board for the combat functions to take place
