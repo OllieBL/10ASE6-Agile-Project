@@ -57,3 +57,8 @@ __Postconditions:__ Player has participated in game
 
 ## __Sprint 2__
 
+### __Design__
+
+#### __Structure Chart__
+![Alt text](Images%20and%20other%20files/Screenshot%202025-06-11%20093929.png)
+
