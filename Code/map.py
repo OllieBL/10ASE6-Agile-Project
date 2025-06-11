@@ -5,11 +5,12 @@ import random
 import math
 
 class Map:
-    def __init__(self, room_quantity, screen_dimensions, screen):
+    def __init__(self, room_quantity, screen_dimensions, screen, player):
         self._room_quantity = room_quantity
         self._rooms = []
         self._screen_dimensions = screen_dimensions
         self.screen = screen
+        self.player = player
         
         self.createMap()
 
@@ -54,7 +55,14 @@ class Map:
 
                 room_coordinate = coord_calculator(self._screen_dimensions[0], i_room_id[0], i_room_id[1])
 
-                if i.get_room_type() == 0:
+                if self._rooms.index(i) == self.player.get_location():
+                    pygame.draw.circle(
+                        self.screen, 
+                        (0, 0, 255), 
+                        [room_coordinate, self._screen_dimensions[1] - (i_room_id[0] * 100 + 100)], 
+                        20
+                        )
+                elif i.get_room_type() == 0:
                     pygame.draw.circle(
                         self.screen, 
                         (255, 255, 255), 
@@ -89,6 +97,12 @@ class Map:
                         [room_coordinate, self._screen_dimensions[1] - (i_room_id[0] * 100 + 100)], 
                         [coord_calculator(self._screen_dimensions[0], i_room_id[0] + 1, i_room_id[1] + 1), self._screen_dimensions[1] - ((i_room_id[0] - 1) * 100 + 100)] 
                         )
+                    
+            pygame.draw.rect(
+                self.screen,
+                (255, 255, 255),
+                pygame.Rect()
+            )
 
             pygame.display.flip()
                 
@@ -106,14 +120,3 @@ class Room:
     
     def get_room_type(self):
         return self._room_type
-
-
-
-
-
-pygame.init()
-
-screen = pygame.display.set_mode((1920, 1080))
-
-map = Map(21, [1920, 1080], screen)
-map.display_map()

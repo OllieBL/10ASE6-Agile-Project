@@ -1,7 +1,4 @@
-from abc import ABC, abstractmethod
-
-
-class CombatObject(ABC):
+class CombatObject():
     def __init__(self, health, speed, damage, inventory, combat_object_type, board_position, image):
         self._health = health
         self._speed = speed
@@ -11,7 +8,7 @@ class CombatObject(ABC):
         self._board_position = board_position
         self._image = image
 
-    @abstractmethod
+
     def attack(self):
         pass
 

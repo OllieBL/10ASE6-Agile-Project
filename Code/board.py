@@ -12,6 +12,7 @@ class CombatBoard:
         self._image_list = []
         self.screen = screen
         self._tick = 0
+        self._combat_over = False
 
         self.create_board()
         self.load_images()
@@ -116,6 +117,16 @@ class CombatBoard:
             self._board_tiles[new_position[0]][new_position[1]] = Tile(self._combat_objects[0])
             
             return True
+        
+    def check_combat_complete(self):
+        if self._combat_objects[0].get_health() == 0:
+            self._combat_over = True
+        else:
+            enemy_health_sum = 0
+            for i in range(len(self._combat_objects) - 1):
+                enemy_health_sum += self._combat_objects[i + 1].get_health()
+            if enemy_health_sum == 0:
+                self._combat_over = True
 
 
 
