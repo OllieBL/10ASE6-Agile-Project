@@ -3,6 +3,8 @@ from pygame.locals import *
 from sys import exit
 import random
 import math
+import combat_objects
+import player
 
 class Map:
     def __init__(self, room_quantity, screen_dimensions, screen, player):
@@ -17,7 +19,6 @@ class Map:
 
     def createMap(self):
         room_type_amount = [random.randrange(math.floor((self._room_quantity - 1) / 6), math.floor((self._room_quantity - 1) / 3)), random.randrange(math.floor((self._room_quantity - 1) / 6), math.floor((self._room_quantity  - 1) / 3))]
-        print(room_type_amount)
         room_type_list = []
         for i in range(len(room_type_amount)):
             for j in range(room_type_amount[i]):
@@ -48,6 +49,8 @@ class Map:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.check_buttons()
 
             for i in self._rooms:
                 i_room_id = i.get_room_id()
@@ -55,7 +58,7 @@ class Map:
 
                 room_coordinate = coord_calculator(self._screen_dimensions[0], i_room_id[0], i_room_id[1])
 
-                if self._rooms.index(i) == self.player.get_location():
+                if i_room_id == self.player.get_pos():
                     pygame.draw.circle(
                         self.screen, 
                         (0, 0, 255), 
@@ -101,10 +104,28 @@ class Map:
             pygame.draw.rect(
                 self.screen,
                 (255, 255, 255),
-                pygame.Rect()
+                pygame.Rect(300, 300, 100, 50)
+            )
+
+            pygame.draw.rect(
+                self.screen,
+                (255, 255, 255),
+                pygame.Rect(150, 300, 100, 50)
             )
 
             pygame.display.flip()
+
+    def check_buttons(self):
+        mouse_pos = pygame.mouse.get_pos()
+
+        if 300 <= mouse_pos[0] <= 400 and 300 <= mouse_pos[1] <= 350:
+            old_player_pos = self.player.get_pos()
+            self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1] + 1])
+        if 150 <= mouse_pos[0] <= 250 and 300 <= mouse_pos[1] <= 350:
+            old_player_pos = self.player.get_pos()
+            self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1]])
+        
+
                 
 
 
@@ -120,3 +141,12 @@ class Room:
     
     def get_room_type(self):
         return self._room_type
+    
+pygame.init()
+
+screen = pygame.display.set_mode((1920, 1080))
+
+player0 = player.Player([1, 0], combat_objects.Player(10, 2, 2, [], 'player', [0,0], 'Images and other files/test_image.png', []))
+
+map0 = Map(21, [1920, 1080], screen, player0)
+map0.display_map()
