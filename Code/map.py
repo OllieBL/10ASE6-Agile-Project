@@ -5,6 +5,7 @@ import random
 import math
 import combat_objects
 import player
+import board
 
 class Map:
     def __init__(self, room_quantity, screen_dimensions, screen, player):
@@ -39,9 +40,10 @@ class Map:
                 row += 1
 
 
-            self._rooms.append(Room([row, column], 0, 0, room_type))
+            self._rooms.append(Room([row, column], board.CombatBoard([self.player.get_combat_state(), combat_objects.Enemy(5, 0, 2, 0, 'enemy', [5, 5], 'Images and other files/enemy_art.png')], [20, 20], self.screen), 0, room_type))
 
         self._rooms.append(Room([row+2, (row+1)/2], 0, 0, 0))
+        self._room_pos_list = [i.get_room_id() for i in self._rooms]
 
 
     def display_map(self):
@@ -121,6 +123,7 @@ class Map:
         if 300 <= mouse_pos[0] <= 400 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1] + 1])
+            self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout().display_board()
         if 150 <= mouse_pos[0] <= 250 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1]])
@@ -141,6 +144,9 @@ class Room:
     
     def get_room_type(self):
         return self._room_type
+    
+    def get_layout(self):
+        return self._layout
     
 pygame.init()
 

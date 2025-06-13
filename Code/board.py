@@ -16,7 +16,6 @@ class CombatBoard:
 
         self.create_board()
         self.load_images()
-        self.display_board()
     
     def create_board(self):
         for i in range(self._board_dimensions[0]):
@@ -51,6 +50,7 @@ class CombatBoard:
                 self._image_list[i].append(tile_image)
 
     def display_board(self):
+        pygame.fill()
         while True:
             self._tick += 1
             for event in pygame.event.get():
