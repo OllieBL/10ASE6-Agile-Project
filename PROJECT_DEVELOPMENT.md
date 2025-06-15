@@ -62,3 +62,66 @@ __Postconditions:__ Player has participated in game
 #### __Structure Chart__
 ![Alt text](Images%20and%20other%20files/Screenshot%202025-06-11%20093929.png)
 
+#### __Algorithms__
+
+##### __Pseudocode__
+```
+    BEGIN main
+        RunMenu
+        RunMap
+    END main
+
+    BEGIN RunMenu
+        runmenu = True
+        WHILE runmenu is True
+            clear page
+            create title
+            create start button
+            IF start button is clicked THEN
+                runmenu = False
+            ENDIF
+        ENDWHILE
+    END RunMenu
+
+    BEGIN RunMap
+        runmap = True
+        WHILE runmap is True
+            clear screens
+            create rooms
+            create choice buttons
+            arrange map
+            IF choice button clicked THEN
+                RunRoom
+            ENDIF
+            IF player has completed all rooms THEN
+                runmap = False
+            ENDIF
+        ENDWHILE
+    END RunMap
+
+    BEGIN RunRoom
+        runroom  = True
+        WHILE runroom is True
+            clear screen
+            create tiles
+            place combat objects on tiles
+            create action buttons
+            IF action button clicked THEN
+                player performs action
+                enemy performs action
+            ENDIF
+            IF player is dead OR all enemies are dead THEN
+                runroom = False
+            ENDIF
+        ENDWHILE
+    END RunRoom
+```
+
+#### __Flowcharts__
+![alt text](<Images and other files/main flowchart.png>)
+
+![alt text](<Images and other files/runmenu flowchart.png>)
+
+![alt text](<Images and other files/runmap flowchart.png>)
+
+![alt text](<Images and other files/runroom flowchart.png>)
