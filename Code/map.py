@@ -40,13 +40,14 @@ class Map:
                 row += 1
 
 
-            self._rooms.append(Room([row, column], 0, room_type, self.player, self.screen))
+            self._rooms.append(Room([row, column], room_type, self.player, self.screen))
 
-        self._rooms.append(Room([row+2, (row+1)/2], 0, self.player, 0, 0))
+        self._rooms.append(Room([row+2, (row+1)/2], 0, self.player, self.screen))
         self._room_pos_list = [i.get_room_id() for i in self._rooms]
 
 
     def display_map(self):
+        self.screen.fill((0, 0, 0))
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -134,10 +135,9 @@ class Map:
 
 
 class Room:
-    def __init__(self, room_id, combat_objects, room_type, player, screen):
+    def __init__(self, room_id, room_type, player, screen):
         self._room_id = room_id
         self._layout = []
-        self._combat_objects = combat_objects
         self._room_type = room_type
         self.screen = screen
         self._player = player
@@ -174,13 +174,3 @@ class Room:
                         combat_objects_list.append(combat_objects.Enemy(10, 2, 1, 0, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
                         break
         self._layout = board.CombatBoard(combat_objects_list, [20, 20], self.screen)
-
-    
-pygame.init()
-
-screen = pygame.display.set_mode((1920, 1080))
-
-player0 = player.Player([1, 0], combat_objects.Player(10, 2, 2, [], 'player', [0,0], 'Images and other files/test_image.png', []))
-
-map0 = Map(21, [1920, 1080], screen, player0)
-map0.display_map()

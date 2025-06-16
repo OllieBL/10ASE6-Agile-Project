@@ -40,7 +40,7 @@ class CombatBoard:
             
             for j in range(len(self._board_tiles[i])):
                 if self._board_tiles[i][j].get_combat_object() != False:
-                    tile_image = pygame.image.load(self._board_tiles[i][j].get_combat_object().get_image()).convert()
+                    tile_image = pygame.image.load(self._board_tiles[i][j].get_combat_object().get_image()).convert_alpha()
                     tile_image = pygame.transform.scale(tile_image, (30, 30))
 
                 else:

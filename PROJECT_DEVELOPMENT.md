@@ -36,18 +36,18 @@ __Postconditions:__ Player has participated in game
 ### __Design__
 
 #### __Storyboard__
-![Alt text](Images%20and%20other%20files/Storyboard.png)
+![Alt text](Images%20and%20other%20files/Documentation%20images/Storyboard.png)
 
 #### __Data Flow Diagrams__
 
 ##### __Level 0 Data Flow Diagram__
-![Alt text](Images%20and%20other%20files/Level%200%20Data%20Flow%20Diagram.png)
+![Alt text](Images%20and%20other%20files/Documentation%20images/Level%200%20Data%20Flow%20Diagram.png)
 
 ##### __Level 1 Data Flow Diagram__
-![Alt text](Images%20and%20other%20files/Level%201%20Data%20Flow%20Diagram.png)
+![Alt text](Images%20and%20other%20files/Documentation%20images/Level%201%20Data%20Flow%20Diagram.png)
 
 #### __GANTT Chart__
-![Alt text](Images%20and%20other%20files/Online%20Gantt%2020250520.png)
+
 
 ### __Review__
 1. My code fulfills some of the requirements, however there are many that will be fulfilled later. For instance, only the board is currently in existance, because I would like to program effectively from the beginning, I am unable to create a rudimentary UI without programming a large amount of the functionality in the code. The map, all combat features, as well as all art is not present in the build currently, as it is difficult to create a UI how I would like, due to the large amount of screens that I would like to put in the game
@@ -60,7 +60,7 @@ __Postconditions:__ Player has participated in game
 ### __Design__
 
 #### __Structure Chart__
-![Alt text](Images%20and%20other%20files/Screenshot%202025-06-11%20093929.png)
+![Alt text](Images%20and%20other%20files/Documentation%20images/Screenshot%202025-06-11%20093929.png)
 
 #### __Algorithms__
 
@@ -118,10 +118,13 @@ __Postconditions:__ Player has participated in game
 ```
 
 #### __Flowcharts__
-![alt text](<Images and other files/main flowchart.png>)
+![Alt text](Images%20and%20other%20files/Documentation%20images/main%20flowchart.png)
 
-![alt text](<Images and other files/runmenu flowchart.png>)
+![Alt text](Images%20and%20other%20files/Documentation%20images/runmenu%20flowchart.png)
 
-![alt text](<Images and other files/runmap flowchart.png>)
+![Alt text](Images%20and%20other%20files/Documentation%20images/runmap%20flowchart.png)
 
-![alt text](<Images and other files/runroom flowchart.png>)
+![Alt text](Images%20and%20other%20files/Documentation%20images/runroom%20flowchart.png)
+
+### __Review__
+1. 
