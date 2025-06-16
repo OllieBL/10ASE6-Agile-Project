@@ -50,11 +50,10 @@ class CombatBoard:
                 self._image_list[i].append(tile_image)
 
     def display_board(self):
-        pygame.fill()
+        self.screen.fill((0, 0, 0))
         while True:
-            self._tick += 1
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == QUIT:
                     exit()
                 test = self.update_board(event)
 
@@ -64,7 +63,7 @@ class CombatBoard:
 
             for i in range(len(self._board_tiles)):
                 for j in range(len(self._board_tiles[i])):
-                    pygame.draw.rect(self.screen, (255, 255, 255), pygame.Rect((i*35+10), (j*35+10), 30, 30))
+                    pygame.draw.rect(self.screen, (255, 255, 255), Rect((i*35+10), (j*35+10), 30, 30))
                     if self._image_list[i][j] != False:
                         self.screen.blit(self._image_list[i][j], (i*35+10, j*35+10))
             
@@ -84,22 +83,18 @@ class CombatBoard:
             if event.key == K_LEFT and current_position[0][0] > 0:
                 self._combat_objects[0].set_board_position([current_position[0][0] - 1, current_position[0][1]])
                 new_position = [current_position[0][0] - 1, current_position[0][1]]
-                print('went left')
 
             elif event.key == K_RIGHT and current_position[0][0] < (self._board_dimensions[0] - 1):
                 self._combat_objects[0].set_board_position([current_position[0][0] + 1, current_position[0][1]])
                 new_position = [current_position[0][0] + 1, current_position[0][1]]
-                print('went right')
 
             elif event.key == K_UP and current_position[0][1] > 0:
                 self._combat_objects[0].set_board_position([current_position[0][0], current_position[0][1] - 1])
                 new_position = [current_position[0][0], current_position[0][1] - 1]
-                print('went up')
 
             elif event.key == K_DOWN and current_position[0][1] < (self._board_dimensions[1] - 1):
                 self._combat_objects[0].set_board_position([current_position[0][0], current_position[0][1] + 1])
                 new_position = [current_position[0][0], current_position[0][1] + 1]
-                print('went right')
 
             else:
                 new_position = current_position[0]
@@ -111,6 +106,7 @@ class CombatBoard:
                     self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
                     self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])
 
+            self._tick += 1
 
             
             self._board_tiles[current_position[0][0]][current_position[0][1]] = Tile(False)

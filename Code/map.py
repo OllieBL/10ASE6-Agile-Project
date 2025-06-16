@@ -40,9 +40,9 @@ class Map:
                 row += 1
 
 
-            self._rooms.append(Room([row, column], board.CombatBoard([self.player.get_combat_state(), combat_objects.Enemy(5, 0, 2, 0, 'enemy', [5, 5], 'Images and other files/enemy_art.png')], [20, 20], self.screen), 0, room_type))
+            self._rooms.append(Room([row, column], 0, room_type, self.player, self.screen))
 
-        self._rooms.append(Room([row+2, (row+1)/2], 0, 0, 0))
+        self._rooms.append(Room([row+2, (row+1)/2], 0, self.player, 0, 0))
         self._room_pos_list = [i.get_room_id() for i in self._rooms]
 
 
@@ -123,7 +123,8 @@ class Map:
         if 300 <= mouse_pos[0] <= 400 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1] + 1])
-            self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout().display_board()
+            self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
+            (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
         if 150 <= mouse_pos[0] <= 250 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1]])
@@ -133,11 +134,13 @@ class Map:
 
 
 class Room:
-    def __init__(self, room_id, layout, combat_objects, room_type):
+    def __init__(self, room_id, combat_objects, room_type, player, screen):
         self._room_id = room_id
-        self._layout = layout
+        self._layout = []
         self._combat_objects = combat_objects
         self._room_type = room_type
+        self.screen = screen
+        self._player = player
 
     def get_room_id(self):
         return self._room_id
@@ -147,6 +150,31 @@ class Room:
     
     def get_layout(self):
         return self._layout
+    
+    def generate_layout(self):
+        combat_objects_list = [self._player.get_combat_state()]
+        if self._room_type == 2:
+            return 2
+        if self._room_type == 1:
+            enemy_pos_list = []
+            number_of_enemies = self._room_id[0] * 3
+            for i in range(number_of_enemies):
+                while True:
+                    random_pos = [random.randrange(0, 20), random.randrange(0, 16)]
+                    if random_pos not in enemy_pos_list:
+                        combat_objects_list.append(combat_objects.Enemy(10, 2, 1, 0, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
+                        break
+        else:
+            enemy_pos_list = []
+            number_of_enemies = self._room_id[0] * 2
+            for i in range(number_of_enemies):
+                while True:
+                    random_pos = [random.randrange(0, 20), random.randrange(0, 16)]
+                    if random_pos not in enemy_pos_list:
+                        combat_objects_list.append(combat_objects.Enemy(10, 2, 1, 0, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
+                        break
+        self._layout = board.CombatBoard(combat_objects_list, [20, 20], self.screen)
+
     
 pygame.init()
 
