@@ -106,8 +106,8 @@ class Enemy(CombatObject):
     def __init__(self, health, speed, damage, inventory, combat_object_type, board_position, image):
         super().__init__(health, speed, damage, inventory, combat_object_type, board_position, image)
 
-    def attack(self):
-        pass
+    def attack(self, target):
+        target.change_health(-self._damage)
 
     def get_board_position(self):
         return super().get_board_position()
@@ -121,9 +121,10 @@ class Enemy(CombatObject):
     def set_image(self, image):
         super().set_image(image)
 
-    def decide_movement(self, player_board_position):
+    def decide_movement(self, player_board_position, allies):
         enemy_movement = []
         distance_checker = []
+        allies_tester = allies
 
         
         distance_checker.append(abs((self._board_position[0] - 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position[1]) ** 2)
@@ -134,6 +135,18 @@ class Enemy(CombatObject):
         enemy_movement.append([self._board_position[0], self._board_position[1] - 1])
         distance_checker.append(abs(self._board_position[0] - player_board_position[0]) ** 2 + abs((self._board_position[1] + 1)- player_board_position[1]) ** 2)
         enemy_movement.append([self._board_position[0], self._board_position[1] + 1])
+
+        for i in allies:
+            for j in enemy_movement:
+                if i == j:
+                    enemy_movement.pop(allies_tester.index(i))
+                    distance_checker.pop(allies_tester.index(i))
+                    allies_tester.pop(allies_tester.index(i))
+
+        if distance_checker == []:
+            enemy_movement = [self.get_board_position()]
+            distance_checker = [0]
+
 
         self._board_position = enemy_movement[distance_checker.index(min(distance_checker))]
         return self._board_position

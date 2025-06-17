@@ -73,12 +73,14 @@ class CombatBoard:
     def update_board(self, event):
         if event.type == KEYDOWN:
             current_position = []
-            enemy_new_position = ['']
+            enemy_current_position = []
+            enemy_new_position = []
             for i in self._combat_objects:
                 current_position.append([i.get_board_position()[0], i.get_board_position()[1]])
 
             for i in range(len(self._combat_objects) - 1):
                 enemy_new_position.append('')
+                enemy_current_position.append(self._combat_objects[i+1].get_board_position())
 
             if event.key == K_LEFT and current_position[0][0] > 0:
                 self._combat_objects[0].set_board_position([current_position[0][0] - 1, current_position[0][1]])
@@ -101,8 +103,12 @@ class CombatBoard:
             
             for i in range(len(self._combat_objects) - 1):
                 if self._tick % 2 == 0:
-                
-                    enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position())
+                    print(enemy_current_position)
+                    print(enemy_new_position)
+
+                    enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
+                    print(enemy_current_position,',')
+                    enemy_current_position[i] = enemy_new_position[i]
                     self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
                     self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])
 
