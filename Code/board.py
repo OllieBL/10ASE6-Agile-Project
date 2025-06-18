@@ -103,11 +103,8 @@ class CombatBoard:
             
             for i in range(len(self._combat_objects) - 1):
                 if self._tick % 2 == 0:
-                    print(enemy_current_position)
-                    print(enemy_new_position)
 
                     enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
-                    print(enemy_current_position,',')
                     enemy_current_position[i] = enemy_new_position[i]
                     self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
                     self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])

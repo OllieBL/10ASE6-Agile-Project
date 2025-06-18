@@ -124,7 +124,6 @@ class Enemy(CombatObject):
     def decide_movement(self, player_board_position, allies):
         enemy_movement = []
         distance_checker = []
-        allies_tester = allies
 
         
         distance_checker.append(abs((self._board_position[0] - 1) - player_board_position[0]) ** 2 + abs(self._board_position[1] - player_board_position[1]) ** 2)
@@ -137,11 +136,12 @@ class Enemy(CombatObject):
         enemy_movement.append([self._board_position[0], self._board_position[1] + 1])
 
         for i in allies:
-            for j in enemy_movement:
-                if i == j:
-                    enemy_movement.pop(allies_tester.index(i))
-                    distance_checker.pop(allies_tester.index(i))
-                    allies_tester.pop(allies_tester.index(i))
+            continuous_checker = 0 
+            for j in range(len(enemy_movement)):
+                if i == enemy_movement[j-continuous_checker]:
+                    enemy_movement.pop(j)
+                    distance_checker.pop(j)
+                    continuous_checker += 1
 
         if distance_checker == []:
             enemy_movement = [self.get_board_position()]
