@@ -56,12 +56,19 @@ class CombatObject():
         self._board_position = board_position
 
 class Player(CombatObject):
-    def __init__(self, health, speed, damage, inventory, object_type, board_position, image, spells):
+    def __init__(self, health, speed, damage, inventory, object_type, board_position, image):
         super().__init__(health, speed, damage, inventory, object_type, board_position, image)
-        self._spells = spells
 
-    def attack(self):
-        pass
+    def attack(self, direction, enemies):
+        for i in enemies:
+            if direction == 0 and i.get_board_position()[0] > self._board_position[0]:
+                i.change_health(-self._damage)
+            if direction == 1 and i.get_board_position()[1] > self._board_position[1]:
+                i.change_health(-self._damage)
+            if direction == 2 and i.get_board_position()[0] < self._board_position[0]:
+                i.change_health(-self._damage)
+            if direction == 3 and i.get_board_position()[1] < self._board_position[1]:
+                i.change_health(-self._damage)
 
     def get_image(self):
         return super().get_image()

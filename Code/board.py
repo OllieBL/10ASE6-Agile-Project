@@ -13,6 +13,7 @@ class CombatBoard:
         self.screen = screen
         self._tick = 0
         self._combat_over = False
+        self._attacking = False
 
         self.create_board()
         self.load_images()
@@ -75,45 +76,89 @@ class CombatBoard:
             current_position = []
             enemy_current_position = []
             enemy_new_position = []
+            moved = False
+            change = False
             for i in self._combat_objects:
                 current_position.append([i.get_board_position()[0], i.get_board_position()[1]])
+                if i.get_health() <= 0:
+                    self._combat_objects[self._combat_objects.index(i)]
 
             for i in range(len(self._combat_objects) - 1):
                 enemy_new_position.append('')
                 enemy_current_position.append(self._combat_objects[i+1].get_board_position())
 
-            if event.key == K_LEFT and current_position[0][0] > 0:
+            if event.key == K_LEFT and current_position[0][0] > 0 and self._attacking == False:
                 self._combat_objects[0].set_board_position([current_position[0][0] - 1, current_position[0][1]])
                 new_position = [current_position[0][0] - 1, current_position[0][1]]
+                moved = True
+                change = True
 
-            elif event.key == K_RIGHT and current_position[0][0] < (self._board_dimensions[0] - 1):
+            elif event.key == K_RIGHT and current_position[0][0] < (self._board_dimensions[0] - 1) and self._attacking == False:
                 self._combat_objects[0].set_board_position([current_position[0][0] + 1, current_position[0][1]])
                 new_position = [current_position[0][0] + 1, current_position[0][1]]
+                moved = True
+                change = True
 
-            elif event.key == K_UP and current_position[0][1] > 0:
+            elif event.key == K_UP and current_position[0][1] > 0 and self._attacking == False:
                 self._combat_objects[0].set_board_position([current_position[0][0], current_position[0][1] - 1])
                 new_position = [current_position[0][0], current_position[0][1] - 1]
+                moved = True
+                change = True
 
-            elif event.key == K_DOWN and current_position[0][1] < (self._board_dimensions[1] - 1):
+            elif event.key == K_DOWN and current_position[0][1] < (self._board_dimensions[1] - 1) and self._attacking == False:
                 self._combat_objects[0].set_board_position([current_position[0][0], current_position[0][1] + 1])
                 new_position = [current_position[0][0], current_position[0][1] + 1]
+                moved = True
+                change = True
 
             else:
                 new_position = current_position[0]
+
+            if event.key == K_a and self._attacking == False:
+                self._attacking = True
+            elif event.key == K_a and self._attacking == True:
+                self._attacking = False
+
+            if event.key == K_RIGHT and self._attacking == True:
+                self._combat_objects[0].attack(0, self._combat_objects)
+                self._attacking = False
+                change = True
+            if event.key == K_DOWN and self._attacking == True:
+                self._combat_objects[0].attack(1, self._combat_objects)
+                self._attacking = False
+                change = True
+            if event.key == K_LEFT and self._attacking == True:
+                self._combat_objects[0].attack(2, self._combat_objects)
+                self._attacking = False
+                change = True
+            if event.key == K_UP and self._attacking == True:
+                self._combat_objects[0].attack(3, self._combat_objects)
+                self._attacking = False
+                change = True
             
-            for i in range(len(self._combat_objects) - 1):
-                if self._tick % 2 == 0:
+            if change == True:
+                checker = 0
+                for i in range(len(self._combat_objects) - 1):
+                    test = False
+                    if self._combat_objects[i+1-checker].get_health() <= 0:
+                        self._combat_objects.pop(i+1-checker)
+                        test = True
+                    if self._tick % 2 == 0:
 
-                    enemy_new_position[i] = self._combat_objects[i+1].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
-                    enemy_current_position[i] = enemy_new_position[i]
-                    self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
-                    self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1])
+                        enemy_new_position[i] = self._combat_objects[i+1-checker].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
+                        enemy_current_position[i] = enemy_new_position[i]
+                        self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
+                        self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1-checker])
+                        
+                    if test == True:
+                        checker +=1
+                    
+                self._tick += 1
 
-            self._tick += 1
 
-            
-            self._board_tiles[current_position[0][0]][current_position[0][1]] = Tile(False)
-            self._board_tiles[new_position[0]][new_position[1]] = Tile(self._combat_objects[0])
+                if moved == True:
+                    self._board_tiles[current_position[0][0]][current_position[0][1]] = Tile(False)
+                    self._board_tiles[new_position[0]][new_position[1]] = Tile(self._combat_objects[0])
             
             return True
         
