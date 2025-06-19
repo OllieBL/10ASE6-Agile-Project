@@ -107,7 +107,7 @@ class Enemy(CombatObject):
         super().set_image(image)
 
     # How enemies decide on their movement, runs by checking the distance to the player for every distance, removing any that collide with other enemies, then returning the result
-    def decide_movement(self, player_board_position, allies):
+    def decide_movement(self, player_board_position, allies, player):
         enemy_movement = []
         distance_checker = []
 
@@ -130,6 +130,11 @@ class Enemy(CombatObject):
                     continuous_checker += 1
 
         if distance_checker == []:
+            enemy_movement = [self.get_board_position()]
+            distance_checker = [0]
+
+        if self._board_position == player_board_position:
+            self.attack(player)
             enemy_movement = [self.get_board_position()]
             distance_checker = [0]
 

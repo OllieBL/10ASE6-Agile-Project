@@ -14,7 +14,8 @@ class Map:
         self._screen_dimensions = screen_dimensions
         self.screen = screen
         self.player = player
-        self._text = pygame.font.SysFont('calibri.ttf', 40)
+        self._text = pygame.font.SysFont('calibri.ttf', 30)
+        self._player_dead = False
         
         self.createMap()
 
@@ -52,8 +53,8 @@ class Map:
 
         
             
-        left_button_text = self._text.render('Go Right', False, (0, 0, 0))
-        right_button_text = self._text.render('Go left', False, (0, 0, 0))
+        left_button_text = self._text.render('Go left', False, (0, 0, 0))
+        right_button_text = self._text.render('Go right', False, (0, 0, 0))
 
         left_button_text_rect = left_button_text.get_rect()
         right_button_text_rect = right_button_text.get_rect()
@@ -66,6 +67,9 @@ class Map:
                     exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.check_buttons()
+
+            if self._player_dead == True:
+                break
 
             for i in self._rooms:
                 i_room_id = i.get_room_id()
@@ -142,7 +146,7 @@ class Map:
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1] + 1])
             test = self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
             if test != False:
-                (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+                self._player_dead = (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
                 self.player.get_combat_state().set_damage(self.player.get_combat_state().get_damage() + 1)
             else:
                 print('you got stuff')
@@ -157,7 +161,7 @@ class Map:
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1]])
             test = self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
             if test != False:
-                (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+                self._player_dead = (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
                 self.player.get_combat_state().set_damage(self.player.get_combat_state().get_damage() + 1)
             else:
                 print('you got stuff')

@@ -14,6 +14,7 @@ class CombatBoard:
         self._tick = 0 # used to make enemies take two turns to move
         self._combat_over = False
         self._attacking = False
+        self._text = pygame.font.SysFont('calibri.ttf', 40)
 
         self.create_board()
         self.load_images()
@@ -53,11 +54,14 @@ class CombatBoard:
 
     # Displays the board, and is the function that the player interacts with
     def display_board(self):
-        self.screen.fill((0, 0, 0))
         while True:
+            self.screen.fill((0, 0, 0))
             self.check_combat_complete()
             if self._combat_over == True:
-                break
+                if self._combat_objects[0].get_health() <= 0:
+                    return True
+                else:
+                    return False
             for event in pygame.event.get():
                 if event.type == QUIT:
                     exit()
@@ -72,6 +76,14 @@ class CombatBoard:
                     pygame.draw.rect(self.screen, (255, 255, 255), Rect((i*35+10), (j*35+10), 30, 30))
                     if self._image_list[i][j] != False:
                         self.screen.blit(self._image_list[i][j], (i*35+10, j*35+10))
+
+            
+            hp_display = self._text.render(f'{self._combat_objects[0].get_health()}/10hp', False, (255, 255, 255))
+            hp_display_rect = hp_display.get_rect()
+
+            hp_display_rect.center = (1000, 500)
+
+            self.screen.blit(hp_display, hp_display_rect)
             
 
             pygame.display.flip()
@@ -158,7 +170,7 @@ class CombatBoard:
                     elif self._tick % 2 == 0:
                         
                         # all enemy movement
-                        enemy_new_position[i] = self._combat_objects[i+1-checker].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
+                        enemy_new_position[i] = self._combat_objects[i+1-checker].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position, self._combat_objects[0])
                         enemy_current_position[i] = enemy_new_position[i]
                         self._board_tiles[current_position[i+1][0]][current_position[i+1][1]].set_combat_object(False)
                         self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]].set_combat_object(self._combat_objects[i+1-checker])

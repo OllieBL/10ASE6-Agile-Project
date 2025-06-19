@@ -144,3 +144,17 @@ __Postconditions:__ Player has participated in game
 2. The program can effectively run the use-case, all different parts of the ui are functional and interconnected. There is still no feedback or input assistance during combat though, which may make it difficult to play
 3. My code is well structured, fairly readable, and maintainable. All my code is organised in a fairly logical way, and the code is readable, there is comments in most of the program outlining how it works and what is does, and because of the structure of the code it is fairly easy to read what each section does anyway. The code is maintainable because of each of these two things contributing, allowing further developers to understand the code and what needs to be changed 
 4. In the next stage of development I need to introduce the player dieing, and enemy damage. I also need to add further comments in my code
+
+## __Sprint 4__
+
+### __Design__
+Only two improvements will be added to the code in this stage, the introduction of the death of the player and the further adding of comments in the code.
+The way I will implement the death mechanic is through the player taking damage from enemies over time, then when they reach 0 hp, then the game resets and goes back to the menu
+
+### __Review__
+1. my code meets almost all functional requirements and several of the non-functional requirements specified at the beginning of the project. The functional requirements that I do meet include, map generation, branching paths, player death and reseting, rewards after challenges, combat, and being able to choose harder enemies. However, I missed adding additional forms of actions to use, and missed adding a boss battle at the end. The non-functional requirements that I did meet are readable ui, and randomised map, however it does not provide what the action will look like before it is taken, the game slows down at later levels, and it lacks accessibility options.
+2. The program fulfills the use-case quite effectively, it can go through every step in the process without much difficulty, but the game doesn't reset if you win, and it is difficult to use in some scenarios
+3. My code is fairly readable, well structured, and easy to maintain. The code is well structured, which contributes to the readability, because it is ordered in a way where all individual functions are well split out and distinguishable. The code is readable because of this, and there are comments thoughout most of the code, and it is maintainable because of the combination of these two parts
+
+## __Evaluation__
+1. The next steps I would take is adding art to the program, to make it nicer to use, improving the user input to make it more intuitive, and adding more strategic elements in the combat, like adding extra actions and harder enemies. These would all improve the user experience because the art would make it nicer to use, the improved user inputs would make it easier and more intuitive for the player, and the improved combat would make it better because extra challenge requires the player to put more thought into the game, and increase its longevity, though it may make it less fun for some people seeking a very simple experience.
