@@ -24,6 +24,23 @@
 * The game should be pixel-art based
 * The game should have a couple accessibility options, like changing key functions and changing the display
 
+### __Specifications__
+
+#### __Functional Specifications__
+* The player can interact through the keyboard in combat to attack and move
+* The player can use buttons on the gui to interact with the map
+* The player can enter the game using an on-screen start button
+* The system needs to have combat, involving movement and attacks
+* The player needs to be able to die
+* The system needs to have a randomised map for every playthrough
+* The system needs to have choices for the player to take
+* Combat will be turn-based
+
+#### __Non-functional Specifications__
+* The game should respond quickly with every input the player makes
+* The game should easy to understand 
+* The ui should be intuitive for players
+
 ### __Usecases__
 __Actor:__ Player
 __Preconditions:__ Software installed
@@ -47,7 +64,7 @@ __Postconditions:__ Player has participated in game
 ![Alt text](Images%20and%20other%20files/Documentation%20images/Level%201%20Data%20Flow%20Diagram.png)
 
 #### __GANTT Chart__
-
+![alt text](<Images and other files/Documentation images/Online Gantt 20250620.png>)
 
 ### __Review__
 1. My code fulfills some of the requirements, however there are many that will be fulfilled later. For instance, only the board is currently in existance, because I would like to program effectively from the beginning, I am unable to create a rudimentary UI without programming a large amount of the functionality in the code. The map, all combat features, as well as all art is not present in the build currently, as it is difficult to create a UI how I would like, due to the large amount of screens that I would like to put in the game
@@ -158,3 +175,7 @@ The way I will implement the death mechanic is through the player taking damage 
 
 ## __Evaluation__
 1. The next steps I would take is adding art to the program, to make it nicer to use, improving the user input to make it more intuitive, and adding more strategic elements in the combat, like adding extra actions and harder enemies. These would all improve the user experience because the art would make it nicer to use, the improved user inputs would make it easier and more intuitive for the player, and the improved combat would make it better because extra challenge requires the player to put more thought into the game, and increase its longevity, though it may make it less fun for some people seeking a very simple experience.
+2. The system fulfills most of the requirements and specs, though there are quite a few that it doesn't fulfill that make the system incomplete. In the functional requirements it fulfills map generation, branching paths, player death and resetting, challenge rewards, combat movement and attacks, and the ability to choose a harder enemy to fight. However, it doesn't fulfill the adding of new mechanics for the player in combat or new actions, and the final hrader enemy to complete the game. In the non-functional requirements I have completed, readable ui, randomised maps, and partially fulfilled speed requirements, because it slows down sigificantly in later levels. Although, it misses out on pre-action feedback for the player, art, and accessibility options. The functional specs hat the system contains are, combat interactivity through the keyboard, gui buttons for the map, start button, a combat system, player death that forces them to resart, randomised map, branching paths, turn-based combat. The non-functional specs that it fulfilled are, the game is easy to understand, and mostly quick to respond to inputs. The ui unfortunately is a bit unintuitive. Because of these specs that it fulfills, I believe that this system effectively represents my requirements and specifications, though there are a few that it misses out on.
+3. In total, I had poor time-management in this project. I expected to be much quicker than I am when I designed the gantt chart, which lead to me immediately falling behind, and completing most of the project on the final day. This can be seen in my commits, with three sprints being completed in the one week, two on the day before, which demonstrates that I did not work on this as consistantly as I should have. Though the code is in a finished state, it lacks several features that were planned in the beginning, which suggests I put too much in the plan to complete. It is the combination of these things that leads me to conclude that I have had poor time-management and I planned too much for myself to complete.
+4. Did not complete code in time for others to test, no peer evaluation was performed
+5. I have used OOP class features to create a more concise and organised system as a whole, which also helps in the creation of other systems to produce a more cohesive whole. The first class that I use is the map, which is a seperate class because it allows for a better managed section of code without overcomplicating other parts of the ui, the next is the room class, which isn't just included in the map class because it is a recurring object that the map is composed of, which makes it easier to manage. Another class that I use is the board class, which full manages the combat, and it is a seperate class because it is a unique system that would unnecessarily complicate other parts of the code if it weren't to exist, and the tile class, which composes the board class, and is the main part of the ui that the player looks at, as well as managing the images, which the board uses it for. Another class is the combat_object class, which is the different entities that make up combat, which combatplayer and enemy inherits, because it contains unique functions that allow combat to function, like attacking, and they are seperate children of the system because enemies have the decide movement function, which is how the enemies move towards the player and attack. Also in the system is the player class, which represents the player on the map, and this is seperated from the combatplayer because it allows for more concise and distinct interactions in combat and the map, if they were the same it would be difficult to read and understand the code if it contained additional complication that it didn't need. The final class in the system is the menu class, which displays the title and the start button, and it is seperate because it is the overall loop that everything else is contained within, and so can't be a part of any other gui class. Overall, I believe that I have used classes to create a better and more organised system that makes the code easier to read and maintain
