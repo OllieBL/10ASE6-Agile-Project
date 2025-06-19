@@ -1,9 +1,7 @@
 class CombatObject():
-    def __init__(self, health, speed, damage, inventory, combat_object_type, board_position, image):
+    def __init__(self, health, damage, combat_object_type, board_position, image):
         self._health = health
-        self._speed = speed
         self._damage = damage
-        self._inventory = inventory
         self._combat_object_type = combat_object_type
         self._board_position = board_position
         self._image = image
@@ -56,18 +54,18 @@ class CombatObject():
         self._board_position = board_position
 
 class Player(CombatObject):
-    def __init__(self, health, speed, damage, inventory, object_type, board_position, image):
-        super().__init__(health, speed, damage, inventory, object_type, board_position, image)
+    def __init__(self, health, damage, object_type, board_position, image):
+        super().__init__(health, damage, object_type, board_position, image)
 
     def attack(self, direction, enemies):
         for i in enemies:
-            if direction == 0 and i.get_board_position()[0] > self._board_position[0]:
+            if direction == 0 and i.get_board_position()[0] > self._board_position[0] and i.get_board_position()[1] == self._board_position[1]:
                 i.change_health(-self._damage)
-            if direction == 1 and i.get_board_position()[1] > self._board_position[1]:
+            if direction == 1 and i.get_board_position()[1] > self._board_position[1] and i.get_board_position()[0] == self._board_position[0]:
                 i.change_health(-self._damage)
-            if direction == 2 and i.get_board_position()[0] < self._board_position[0]:
+            if direction == 2 and i.get_board_position()[0] < self._board_position[0] and i.get_board_position()[1] == self._board_position[1]:
                 i.change_health(-self._damage)
-            if direction == 3 and i.get_board_position()[1] < self._board_position[1]:
+            if direction == 3 and i.get_board_position()[1] < self._board_position[1] and i.get_board_position()[0] == self._board_position[0]:
                 i.change_health(-self._damage)
 
     def get_image(self):
@@ -110,8 +108,8 @@ class Player(CombatObject):
         return super().set_combat_object_type(combat_object_type)
     
 class Enemy(CombatObject):
-    def __init__(self, health, speed, damage, inventory, combat_object_type, board_position, image):
-        super().__init__(health, speed, damage, inventory, combat_object_type, board_position, image)
+    def __init__(self, health, damage, combat_object_type, board_position, image):
+        super().__init__(health, damage, combat_object_type, board_position, image)
 
     def attack(self, target):
         target.change_health(-self._damage)

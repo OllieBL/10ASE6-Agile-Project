@@ -123,13 +123,32 @@ class Map:
         if 300 <= mouse_pos[0] <= 400 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1] + 1])
-            self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
-            (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+            test = self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
+            if test != False:
+                (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+                self.player.get_combat_state().set_damage(self.player.get_combat_state().get_damage() + 1)
+            else:
+                print('you got stuff')
+                results = self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()
+                if results[1] == 0:
+                    self.player.get_combat_state().change_health(results[0])
+            
+            self.screen.fill((0, 0, 0))
+
         if 150 <= mouse_pos[0] <= 250 and 300 <= mouse_pos[1] <= 350:
             old_player_pos = self.player.get_pos()
             self.player.set_pos([old_player_pos[0] + 1, old_player_pos[1]])
-            self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
-            (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+            test = self._rooms[self._room_pos_list.index(self.player.get_pos())].generate_layout()
+            if test != False:
+                (self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()).display_board()
+                self.player.get_combat_state().set_damage(self.player.get_combat_state().get_damage() + 1)
+            else:
+                print('you got stuff')
+                results = self._rooms[self._room_pos_list.index(self.player.get_pos())].get_layout()
+                if results[1] == 0:
+                    self.player.get_combat_state().change_health(results[0])
+            
+            self.screen.fill((0, 0, 0))
         
 
                 
@@ -155,7 +174,13 @@ class Room:
     def generate_layout(self):
         combat_objects_list = [self._player.get_combat_state()]
         if self._room_type == 2:
-            return 2
+            test_layout = random.randrange(0,1)
+            if test_layout == 0:
+                multiplier = 2
+            else:
+                multiplier = 1
+            self._layout = [self._room_id[0] * multiplier, test_layout]
+            return False
         if self._room_type == 1:
             enemy_pos_list = []
             number_of_enemies = self._room_id[0] * 3
@@ -163,7 +188,7 @@ class Room:
                 while True:
                     random_pos = [random.randrange(0, 20), random.randrange(0, 16)]
                     if random_pos not in enemy_pos_list:
-                        combat_objects_list.append(combat_objects.Enemy(10, 2, 1, 0, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
+                        combat_objects_list.append(combat_objects.Enemy(10, 1, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
                         break
         else:
             enemy_pos_list = []
@@ -172,6 +197,6 @@ class Room:
                 while True:
                     random_pos = [random.randrange(0, 20), random.randrange(0, 16)]
                     if random_pos not in enemy_pos_list:
-                        combat_objects_list.append(combat_objects.Enemy(10, 2, 1, 0, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
+                        combat_objects_list.append(combat_objects.Enemy(10, 1, 'enemy', random_pos, 'Images and other files/enemy_art.png'))
                         break
         self._layout = board.CombatBoard(combat_objects_list, [20, 20], self.screen)

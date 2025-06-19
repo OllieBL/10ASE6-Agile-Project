@@ -53,6 +53,9 @@ class CombatBoard:
     def display_board(self):
         self.screen.fill((0, 0, 0))
         while True:
+            self.check_combat_complete()
+            if self._combat_over == True:
+                break
             for event in pygame.event.get():
                 if event.type == QUIT:
                     exit()
@@ -143,7 +146,8 @@ class CombatBoard:
                     if self._combat_objects[i+1-checker].get_health() <= 0:
                         self._combat_objects.pop(i+1-checker)
                         test = True
-                    if self._tick % 2 == 0:
+                        self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
+                    elif self._tick % 2 == 0:
 
                         enemy_new_position[i] = self._combat_objects[i+1-checker].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
                         enemy_current_position[i] = enemy_new_position[i]
@@ -165,12 +169,9 @@ class CombatBoard:
     def check_combat_complete(self):
         if self._combat_objects[0].get_health() == 0:
             self._combat_over = True
-        else:
-            enemy_health_sum = 0
-            for i in range(len(self._combat_objects) - 1):
-                enemy_health_sum += self._combat_objects[i + 1].get_health()
-            if enemy_health_sum == 0:
-                self._combat_over = True
+        elif len(self._combat_objects) == 1:
+            self._combat_over = True
+            
 
 
 
