@@ -1,7 +1,8 @@
+# How the player is represented in the map
 class Player():
     def __init__(self, pos, combat_state):
         self._pos = pos
-        self._combat_state = combat_state
+        self._combat_state = combat_state # This is the player combat object, and is saved through this
 
     def get_pos(self):
         return self._pos

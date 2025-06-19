@@ -131,3 +131,16 @@ __Postconditions:__ Player has participated in game
 2. The program effectively performs the flow outlined in the usecase, the player is able to click the play button, the player can select what place on the map they want to enter, and the player can participate in combat. However, the actions in these steps are not particularely intuitive, and the combat does not function.
 3. My code is fairly high quality, however lacks proper inline documentation, with few comments dictating the use of certain function. Despite this, the code is stuctured quite efficiently and in a fairly readable structure. In addition to this, the code is fairly maintainable, with proper use of functions and classes allowing for stand in sections for the code that is not yet completed.
 4. In the next step my code needs to have the combat feature, and the art implemented. I also need to add more comments to my code to help with the readability of my code.
+
+## __Sprint 3__
+
+### __Design__
+
+#### __Structure Chart__
+![alt text](<Images and other files/Documentation images/Class Diagram.png>)
+
+### __Review__
+1. The game does not yet fully contain every requirement that I sepcified, however it contains many of them. the game generates a map that the player can move through, and the player can make choices in each point. The player gets rewards at the end of challenges to allows them to progress farther. Combat contains many of the features outlined, like movement, turns, and attacking. It also contains optional harder challenges. However, the player cannot yet die, the game doesn't reset, the player only has the two existing kinds of actions, and their is no final boss. In the non-functional requirements, the ui is mostly intuitive, the map is noticeably randomised, but the game contains no art, there is no feedback before the player makes an action, the game slows down noticeably when multiple enemies appear on-screen, and there are no accessibility options.
+2. The program can effectively run the use-case, all different parts of the ui are functional and interconnected. There is still no feedback or input assistance during combat though, which may make it difficult to play
+3. My code is well structured, fairly readable, and maintainable. All my code is organised in a fairly logical way, and the code is readable, there is comments in most of the program outlining how it works and what is does, and because of the structure of the code it is fairly easy to read what each section does anyway. The code is maintainable because of each of these two things contributing, allowing further developers to understand the code and what needs to be changed 
+4. In the next stage of development I need to introduce the player dieing, and enemy damage. I also need to add further comments in my code

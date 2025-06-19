@@ -1,8 +1,9 @@
+# Class that represents all objects on the board that can interact in combat
 class CombatObject():
     def __init__(self, health, damage, combat_object_type, board_position, image):
-        self._health = health
+        self._health = health 
         self._damage = damage
-        self._combat_object_type = combat_object_type
+        self._combat_object_type = combat_object_type # used to determnine whether the target of something is a player or an enemy
         self._board_position = board_position
         self._image = image
 
@@ -20,14 +21,8 @@ class CombatObject():
     def get_health(self):
         return self._health
 
-    def get_speed(self):
-        return self._speed
-
     def get_damage(self):
         return self._damage
-
-    def get_inventory(self):
-        return self._inventory
     
     def get_combat_object_type(self):
         return self._combat_object_type
@@ -38,14 +33,8 @@ class CombatObject():
     def set_image(self, image):
         self._image = image
 
-    def set_speed(self, speed):
-        self._speed = speed
-
     def set_damage(self, damage):
         self._damage = damage
-
-    def set_inventory(self, inventory):
-        self._inventory = inventory
     
     def set_combat_object_type(self, combat_object_type):
         self._combat_object_type = combat_object_type
@@ -53,10 +42,12 @@ class CombatObject():
     def set_board_position(self, board_position):
         self._board_position = board_position
 
-class Player(CombatObject):
+# How the player is represented in combat
+class CombatPlayer(CombatObject):
     def __init__(self, health, damage, object_type, board_position, image):
         super().__init__(health, damage, object_type, board_position, image)
 
+    # Allows player to do directional attacks, checks which enemies are in the line and damages them
     def attack(self, direction, enemies):
         for i in enemies:
             if direction == 0 and i.get_board_position()[0] > self._board_position[0] and i.get_board_position()[1] == self._board_position[1]:
@@ -71,17 +62,11 @@ class Player(CombatObject):
     def get_image(self):
         return super().get_image()
     
-    def get_speed(self):
-        return super().get_speed()
-    
     def get_health(self):
         return super().get_health()
     
     def get_damage(self):
         return super().get_damage()
-    
-    def get_inventory(self):
-        return super().get_inventory()
     
     def get_board_position(self):
         return super().get_board_position()
@@ -89,24 +74,19 @@ class Player(CombatObject):
     def get_combat_object_type(self):
         return super().get_combat_object_type()
     
-    def set_speed(self, speed):
-        return super().set_speed(speed)
-    
     def set_image(self, image):
         return super().set_image(image)
     
     def set_damage(self, damage):
         return super().set_damage(damage)
     
-    def set_inventory(self, inventory):
-        return super().set_inventory(inventory)
-    
     def set_board_position(self, board_position):
         return super().set_board_position(board_position)
     
     def set_combat_object_type(self, combat_object_type):
         return super().set_combat_object_type(combat_object_type)
-    
+
+# How the enemies are represented in combat
 class Enemy(CombatObject):
     def __init__(self, health, damage, combat_object_type, board_position, image):
         super().__init__(health, damage, combat_object_type, board_position, image)
@@ -126,6 +106,7 @@ class Enemy(CombatObject):
     def set_image(self, image):
         super().set_image(image)
 
+    # How enemies decide on their movement, runs by checking the distance to the player for every distance, removing any that collide with other enemies, then returning the result
     def decide_movement(self, player_board_position, allies):
         enemy_movement = []
         distance_checker = []

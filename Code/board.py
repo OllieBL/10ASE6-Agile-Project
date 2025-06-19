@@ -11,13 +11,14 @@ class CombatBoard:
         self._board_tiles = []
         self._image_list = []
         self.screen = screen
-        self._tick = 0
+        self._tick = 0 # used to make enemies take two turns to move
         self._combat_over = False
         self._attacking = False
 
         self.create_board()
         self.load_images()
     
+    # Creates the board, generates all tiles in the board with whatever object is on them
     def create_board(self):
         for i in range(self._board_dimensions[0]):
             self._board_tiles.append([])
@@ -32,7 +33,7 @@ class CombatBoard:
                     
 
                 
-
+    # Loads the images onto the correct tile iteratively
     def load_images(self):
         self._image_list = []
 
@@ -50,6 +51,7 @@ class CombatBoard:
 
                 self._image_list[i].append(tile_image)
 
+    # Displays the board, and is the function that the player interacts with
     def display_board(self):
         self.screen.fill((0, 0, 0))
         while True:
@@ -74,6 +76,7 @@ class CombatBoard:
 
             pygame.display.flip()
 
+    # Runs all of the dynamic changes as the combat progresses, figures out movement and attacks
     def update_board(self, event):
         if event.type == KEYDOWN:
             current_position = []
@@ -81,15 +84,17 @@ class CombatBoard:
             enemy_new_position = []
             moved = False
             change = False
+            
+            # loads all object's positions into a list
             for i in self._combat_objects:
                 current_position.append([i.get_board_position()[0], i.get_board_position()[1]])
-                if i.get_health() <= 0:
-                    self._combat_objects[self._combat_objects.index(i)]
 
+            # loads all of the enemies into a list
             for i in range(len(self._combat_objects) - 1):
                 enemy_new_position.append('')
                 enemy_current_position.append(self._combat_objects[i+1].get_board_position())
 
+            # figures out all directional inputs
             if event.key == K_LEFT and current_position[0][0] > 0 and self._attacking == False:
                 self._combat_objects[0].set_board_position([current_position[0][0] - 1, current_position[0][1]])
                 new_position = [current_position[0][0] - 1, current_position[0][1]]
@@ -114,9 +119,11 @@ class CombatBoard:
                 moved = True
                 change = True
 
+            # base case
             else:
                 new_position = current_position[0]
 
+            # attacking inputs and directionals
             if event.key == K_a and self._attacking == False:
                 self._attacking = True
             elif event.key == K_a and self._attacking == True:
@@ -139,33 +146,36 @@ class CombatBoard:
                 self._attacking = False
                 change = True
             
+            # causes the board to update everything that doesn't happend directly
             if change == True:
-                checker = 0
+                checker = 0 # used to keep the list from going out of range when reference against i
                 for i in range(len(self._combat_objects) - 1):
                     test = False
                     if self._combat_objects[i+1-checker].get_health() <= 0:
                         self._combat_objects.pop(i+1-checker)
-                        test = True
+                        test = True # used to check if enemies have died
                         self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
                     elif self._tick % 2 == 0:
-
+                        
+                        # all enemy movement
                         enemy_new_position[i] = self._combat_objects[i+1-checker].decide_movement(self._combat_objects[0].get_board_position(), enemy_current_position)
                         enemy_current_position[i] = enemy_new_position[i]
-                        self._board_tiles[current_position[i+1][0]][current_position[i+1][1]] = Tile(False)
-                        self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]] = Tile(self._combat_objects[i+1-checker])
+                        self._board_tiles[current_position[i+1][0]][current_position[i+1][1]].set_combat_object(False)
+                        self._board_tiles[enemy_new_position[i][0]][enemy_new_position[i][1]].set_combat_object(self._combat_objects[i+1-checker])
                         
                     if test == True:
                         checker +=1
                     
                 self._tick += 1
 
-
+                # section that applies player movement
                 if moved == True:
-                    self._board_tiles[current_position[0][0]][current_position[0][1]] = Tile(False)
-                    self._board_tiles[new_position[0]][new_position[1]] = Tile(self._combat_objects[0])
+                    self._board_tiles[current_position[0][0]][current_position[0][1]].set_combat_object(False)
+                    self._board_tiles[new_position[0]][new_position[1]].set_combat_object(self._combat_objects[0])
             
             return True
         
+    # Checks to see if combat if complete, if it is then returns true
     def check_combat_complete(self):
         if self._combat_objects[0].get_health() == 0:
             self._combat_over = True
@@ -174,7 +184,7 @@ class CombatBoard:
             
 
 
-
+# the individual tiles that the board is made up of
 class Tile:
     def __init__(self, combat_object):
         self._combat_object = combat_object

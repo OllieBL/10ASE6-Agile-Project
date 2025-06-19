@@ -6,6 +6,7 @@ import math
 import combat_objects
 import board
 
+# The map that the player moves around on to complete the game
 class Map:
     def __init__(self, room_quantity, screen_dimensions, screen, player):
         self._room_quantity = room_quantity
@@ -13,10 +14,11 @@ class Map:
         self._screen_dimensions = screen_dimensions
         self.screen = screen
         self.player = player
+        self._text = pygame.font.SysFont('calibri.ttf', 40)
         
         self.createMap()
 
-
+    # creates the map and the rooms inside of it, also randomising the type of room it is
     def createMap(self):
         room_type_amount = [random.randrange(math.floor((self._room_quantity - 1) / 6), math.floor((self._room_quantity - 1) / 3)), random.randrange(math.floor((self._room_quantity - 1) / 6), math.floor((self._room_quantity  - 1) / 3))]
         room_type_list = []
@@ -44,9 +46,20 @@ class Map:
         self._rooms.append(Room([row+2, (row+1)/2], 0, self.player, self.screen))
         self._room_pos_list = [i.get_room_id() for i in self._rooms]
 
-
+    # displays the map and also allows the player to interact with it
     def display_map(self):
         self.screen.fill((0, 0, 0))
+
+        
+            
+        left_button_text = self._text.render('Go Right', False, (0, 0, 0))
+        right_button_text = self._text.render('Go left', False, (0, 0, 0))
+
+        left_button_text_rect = left_button_text.get_rect()
+        right_button_text_rect = right_button_text.get_rect()
+
+        left_button_text_rect.center = (200, 325)
+        right_button_text_rect.center = (350, 325)
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -56,10 +69,11 @@ class Map:
 
             for i in self._rooms:
                 i_room_id = i.get_room_id()
-                coord_calculator = lambda a, b, c : (a / 2) - (b * 50) + (c * 100)
+                coord_calculator = lambda a, b, c : (a / 2) - (b * 50) + (c * 100) # nicer than just copying to everywhere that it's used
 
                 room_coordinate = coord_calculator(self._screen_dimensions[0], i_room_id[0], i_room_id[1])
 
+                # generates the circles on the screen, with different colours for different room types, also draws lines between them
                 if i_room_id == self.player.get_pos():
                     pygame.draw.circle(
                         self.screen, 
@@ -114,6 +128,9 @@ class Map:
                 (255, 255, 255),
                 pygame.Rect(150, 300, 100, 50)
             )
+
+            self.screen.blit(left_button_text, left_button_text_rect)
+            self.screen.blit(right_button_text, right_button_text_rect)
 
             pygame.display.flip()
 

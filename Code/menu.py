@@ -31,7 +31,7 @@ class Menu:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if mouse_pos[0] >= 860 and mouse_pos[0] <= 1060 and mouse_pos[1] >= 200 and mouse_pos[1] <= 300:
-                        player0 = player.Player([1, 0], combat_objects.Player(10, 2, 'player', [9,19], 'Images and other files/test_image.png'))
+                        player0 = player.Player([1, 0], combat_objects.CombatPlayer(10, 2, 'player', [9,19], 'Images and other files/test_image.png'))
                         map0 = map.Map(21, [1920, 1080], self.screen, player0)
                         map0.display_map()
 
